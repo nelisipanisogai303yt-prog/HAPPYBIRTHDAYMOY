@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8e9">
+  <title>A Birthday Surprise for Moy</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      display: grid;
+      min-width: 280px;
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      overflow: hidden;
+      place-items: center;
+      background:
+        radial-gradient(ellipse at 50% 70%, rgba(255, 213, 122, .42), transparent 34rem),
+        linear-gradient(160deg, #fffaf0, #fff2d6);
+      color: #532b22;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      min-height: 560px;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .intro-copy {
+      position: absolute;
+      z-index: 1;
+      top: 10%;
+      left: 20px;
+      width: calc(100% - 40px);
+      animation: fade-in .8s ease-out both;
+      text-align: center;
+    }
+
+    .intro-copy p {
+      margin: 0 0 11px;
+      color: #b46a42;
+      font-size: .73rem;
+      font-weight: 800;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #532b22;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      letter-spacing: -.06em;
+      line-height: 1;
+    }
+
+    h1 span {
+      background: linear-gradient(105deg, #e96837, #f6a52f);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .intro-copy small {
+      display: block;
+      margin-top: 15px;
+      color: #9a6b55;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-style: italic;
+    }
+
+    .table {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      width: min(560px, 82vw);
+      height: 22px;
+      transform: translateX(-50%);
+      border: 3px solid rgba(255, 255, 255, .9);
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e88c4d, #f8c460 48%, #e88c4d);
+      box-shadow: 0 16px 30px rgba(130, 77, 42, .2);
+    }
+
+    .table::before,
+    .table::after {
+      position: absolute;
+      top: 16px;
+      width: 18px;
+      height: 62px;
+      border-radius: 0 0 8px 8px;
+      background: linear-gradient(90deg, #df8046, #f0ad5b);
+      content: "";
+    }
+
+    .table::before { left: 13%; }
+    .table::after { right: 13%; }
+
+    .cake-group {
+      position: absolute;
+      z-index: 2;
+      bottom: calc(18% + 22px);
+      left: 50%;
+      width: min(440px, 82vw);
+      height: min(390px, 47vh);
+      min-height: 270px;
+      transform: translateX(-50%);
+      transform-origin: center bottom;
+      animation: cake-drop 1.8s cubic-bezier(.16, .83, .3, 1.2) both;
+    }
+
+    .cake {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      filter: drop-shadow(0 18px 17px rgba(126, 73, 40, .15));
+    }
+
+    .profile-topper {
+      position: absolute;
+      z-index: 1;
+      top: 13%;
+      left: 50%;
+      width: clamp(68px, 17vw, 88px);
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+      border: 5px solid white;
+      border-radius: 50%;
+      background: #ffe7a4;
+      box-shadow: 0 7px 22px rgba(91, 48, 30, .24);
+      object-fit: cover;
+    }
+
+    .spark {
+      position: absolute;
+      z-index: 1;
+      color: #e8943d;
+      animation: twinkle 1.8s ease-in-out infinite alternate;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+    }
+
+    .spark.one { top: 42%; left: 17%; }
+    .spark.two { top: 36%; right: 19%; animation-delay: .35s; }
+    .spark.three { right: 24%; bottom: 32%; animation-delay: .7s; }
+    .spark.four { bottom: 37%; left: 24%; animation-delay: 1s; }
+
+    .skip-intro {
+      position: absolute;
+      z-index: 3;
+      top: 22px;
+      right: 22px;
+      padding: 10px 15px;
+      border: 1px solid rgba(133, 82, 50, .26);
+      border-radius: 999px;
+      background: rgba(255, 253, 247, .7);
+      color: #81543d;
+      cursor: pointer;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .skip-intro:hover,
+    .skip-intro:focus-visible {
+      background: white;
+      outline: 2px solid #e8943d;
+      outline-offset: 3px;
+    }
+
+    .landing-shadow {
+      position: absolute;
+      z-index: 1;
+      bottom: calc(18% + 7px);
+      left: 50%;
+      width: min(300px, 60vw);
+      height: 20px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: rgba(109, 67, 39, .18);
+      filter: blur(12px);
+      animation: shadow-grow 1.8s ease-out both;
+    }
+
+    @keyframes cake-drop {
+      0% { transform: translate(-50%, -125vh) rotate(-11deg) scale(.88); }
+      68% { transform: translate(-50%, 12px) rotate(3deg) scale(1.02); }
+      82% { transform: translate(-50%, -8px) rotate(-1deg) scale(1); }
+      92% { transform: translate(-50%, 3px) rotate(.5deg) scale(1); }
+      100% { transform: translate(-50%, 0) rotate(0) scale(1); }
+    }
+
+    @keyframes shadow-grow {
+      0%, 15% { opacity: 0; scale: .35; }
+      70%, 100% { opacity: 1; scale: 1; }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; translate: 0 -12px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+
+    @keyframes twinkle {
+      from { opacity: .48; scale: .85; }
+      to { opacity: 1; scale: 1.12; }
+    }
+
+    @media (max-height: 620px) {
+      .stage { min-height: 0; }
+      .cake-group { height: 43vh; min-height: 210px; }
+      .intro-copy { top: 6%; }
+      .table::before, .table::after { height: 38px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <button class="skip-intro" type="button">Skip intro</button>
+    <header class="intro-copy">
+      <p>A little birthday magic</p>
+      <h1>Happy Birthday,<br><span>Moy!</span></h1>
+      <small>Make room for cake ✨</small>
+    </header>
+
+    <span class="spark one" aria-hidden="true">✦</span>
+    <span class="spark two" aria-hidden="true">✧</span>
+    <span class="spark three" aria-hidden="true">✦</span>
+    <span class="spark four" aria-hidden="true">✧</span>
+    <div class="landing-shadow" aria-hidden="true"></div>
+    <div class="table" aria-hidden="true"></div>
+
+    <div class="cake-group">
+      <img class="profile-topper" src="IMAGE/moyprofile.jpg" alt="Moy">
+      <svg class="cake" viewBox="0 0 400 390" role="img" aria-label="Birthday cake with Moy's portrait on top">
+        <ellipse cx="204" cy="339" rx="151" ry="25" fill="#f3c477" opacity=".45"/>
+        <path d="M75 235h257v74c0 21-17 38-38 38H113c-21 0-38-17-38-38z" fill="#f28a50"/>
+        <path d="M75 235c0-17 18-30 41-30h175c23 0 41 13 41 30s-18 29-41 29H116c-23 0-41-12-41-29z" fill="#fff0cc"/>
+        <path d="M76 250c18 0 18 20 36 20s18-20 36-20 18 20 36 20 18-20 36-20 18 20 36 20 18-20 36-20 18 20 40 20v33c-18 0-18 20-36 20s-18-20-36-20-18 20-36 20-18-20-36-20-18 20-36 20-18-20-36-20-18 20-40 20z" fill="#ffc85b"/>
+        <path d="M110 191h187v43H110z" fill="#f5a660"/>
+        <path d="M110 191c0-14 14-24 32-24h123c18 0 32 10 32 24s-14 23-32 23H142c-18 0-32-9-32-23z" fill="#fff5da"/>
+        <path d="M111 206c16 0 16 17 31 17s15-17 31-17 15 17 31 17 15-17 31-17 15 17 31 17 15-17 31-17v26H111z" fill="#ffcd69"/>
+        <path d="M148 154h132v37H148z" fill="#f5a660"/>
+        <path d="M148 154c0-13 12-22 28-22h76c16 0 28 9 28 22s-12 21-28 21h-76c-16 0-28-8-28-21z" fill="#fff5da"/>
+        <path d="M161 104h9v39h-9zM199 96h9v47h-9zM237 104h9v39h-9z" fill="#fff0bb"/>
+        <path d="M165 85c-10 12-8 22 0 25 8-3 10-13 0-25zM203 76c-10 12-8 22 0 25 8-3 10-13 0-25zM241 85c-10 12-8 22 0 25 8-3 10-13 0-25z" fill="#f27b38"/>
+        <path d="M163 187c5 7 11 7 16 0M204 187c5 7 11 7 16 0M245 187c5 7 11 7 16 0" fill="none" stroke="#e77748" stroke-linecap="round" stroke-width="4"/>
+        <circle cx="130" cy="250" r="6" fill="#fff5da"/><circle cx="184" cy="250" r="6" fill="#fff5da"/><circle cx="238" cy="250" r="6" fill="#fff5da"/><circle cx="291" cy="250" r="6" fill="#fff5da"/>
+      </svg>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      let finished = false;
+
+      function finishIntro() {
+        if (finished) return;
+        finished = true;
+        if (window.parent !== window) {
+          window.parent.postMessage({ type: "moy-intro-complete" }, "*");
+        } else {
+          window.location.replace("index.html");
+        }
+      }
+
+      document.querySelector(".skip-intro").addEventListener("click", finishIntro);
+      document.querySelector(".cake-group").addEventListener("animationend", (event) => {
+        if (event.animationName === "cake-drop") window.setTimeout(finishIntro, 850);
+      });
+      window.setTimeout(finishIntro, 5500);
+    })();
+  </script>
+</body>
+</html>

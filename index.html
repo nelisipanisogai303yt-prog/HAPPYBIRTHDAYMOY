@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8e9">
+  <title>Happy Birthday, Moy!</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #532b22;
+      --muted: #9a6b55;
+      --orange: #f27b38;
+      --yellow: #ffc94a;
+      --cream: #fff8e9;
+      --paper: #fffdf7;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse at 9% 12%, rgba(255, 215, 119, .35), transparent 25rem),
+        radial-gradient(ellipse at 92% 78%, rgba(255, 181, 123, .23), transparent 28rem),
+        var(--cream);
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    body::before {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      background-image: radial-gradient(rgba(129, 78, 42, .11) .7px, transparent .7px);
+      background-size: 17px 17px;
+      content: "";
+      opacity: .33;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      isolation: isolate;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 27px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .79rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .brand-star {
+      color: var(--orange);
+      font-size: 1.35rem;
+      animation: twinkle 2.4s ease-in-out infinite;
+    }
+
+    .profile-logo {
+      display: block;
+      width: 120px;
+      height: 120px;
+      flex: 0 0 auto;
+      border: 4px solid white;
+      border-radius: 50%;
+      box-shadow: 0 7px 20px rgba(173, 91, 42, .24);
+      object-fit: cover;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 1;
+      place-items: center;
+      padding: 20px 24px 54px;
+    }
+
+    .birthday-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: min(100%, 980px);
+      min-height: 510px;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .9);
+      border-radius: 34px;
+      background: rgba(255, 253, 247, .88);
+      box-shadow: 0 25px 80px rgba(137, 82, 43, .12), 0 3px 12px rgba(137, 82, 43, .06);
+      backdrop-filter: blur(8px);
+    }
+
+    .floating-photo-layer {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .floating-photo {
+      position: absolute;
+      width: clamp(110px, 14vw, 175px);
+      aspect-ratio: 4 / 5;
+      border: 6px solid rgba(255, 255, 255, .9);
+      border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(109, 67, 39, .2);
+      object-fit: contain;
+      background: rgba(255, 255, 255, .92);
+      opacity: .8;
+    }
+
+    .floating-photo:first-child {
+      top: 28%;
+      left: 3%;
+      animation: float-photo-left 7s ease-in-out infinite;
+    }
+
+    .floating-photo:last-child {
+      right: 3%;
+      bottom: 12%;
+      animation: float-photo-right 8s ease-in-out infinite;
+    }
+
+    .birthday-card::before {
+      position: absolute;
+      top: -135px;
+      right: -80px;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(255, 220, 122, .34), rgba(255, 161, 98, .16));
+      content: "";
+    }
+
+    .copy {
+      position: relative;
+      z-index: 1;
+      padding: 58px 0 58px 64px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 22px;
+      color: #b46a42;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 24px;
+      height: 2px;
+      background: var(--orange);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(4.5rem, 10vw, 7.6rem);
+      font-weight: 700;
+      letter-spacing: -.075em;
+      line-height: .9;
+    }
+
+    h1 span {
+      display: block;
+      padding: 0 0 .11em .04em;
+      background: linear-gradient(105deg, #e96837 8%, #f6a52f 76%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      margin: 23px 0 0;
+      color: #a26d52;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.05rem, 2vw, 1.27rem);
+      font-style: italic;
+    }
+
+    .message {
+      max-width: 325px;
+      margin: 14px 0 0;
+      color: #88634f;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .art {
+      position: relative;
+      display: grid;
+      min-height: 455px;
+      place-items: center;
+      padding: 32px 35px 32px 0;
+    }
+
+    .cake-art {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 390px);
+      overflow: visible;
+      filter: drop-shadow(0 15px 15px rgba(145, 78, 42, .1));
+      animation: bob 4s ease-in-out infinite;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 335px;
+      height: 335px;
+      border: 1px dashed rgba(234, 151, 70, .29);
+      border-radius: 50%;
+      animation: rotate 38s linear infinite;
+    }
+
+    .orbit::before, .orbit::after {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--orange);
+      content: "";
+    }
+
+    .orbit::before { top: 35px; left: 36px; }
+    .orbit::after { right: 12px; bottom: 102px; width: 8px; height: 8px; background: #f5c34b; }
+
+    .sparkle {
+      position: absolute;
+      z-index: 1;
+      color: #e8943d;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+
+    .sparkle.one { top: 14%; right: 18%; font-size: 1.7rem; }
+    .sparkle.two { bottom: 18%; left: 12%; animation-delay: .6s; font-size: 1.25rem; }
+
+    .photo-float {
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      width: 82px;
+      height: 82px;
+      place-items: center;
+      border: 5px solid white;
+      border-radius: 23px;
+      background: linear-gradient(145deg, #ffe7a4, #ffc58d);
+      box-shadow: 0 10px 24px rgba(123, 75, 43, .17);
+      color: rgba(127, 75, 44, .68);
+      font-size: 1.5rem;
+      animation: bob 3.5s ease-in-out infinite;
+    }
+
+    .photo-float.left {
+      top: 20%;
+      left: 2%;
+      transform: rotate(-11deg);
+    }
+
+    .photo-float.right {
+      right: 1%;
+      bottom: 19%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      animation-delay: -1.5s;
+    }
+
+    /* Swap the placeholder symbol in a frame for an img to use a real photo. */
+    .photo-float img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 0 20px 25px;
+      color: #a27a61;
+      font-size: .76rem;
+      letter-spacing: .04em;
+      text-align: center;
+    }
+
+    .gallery {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 28px 0 76px;
+    }
+
+    .gallery-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .gallery-kicker {
+      margin: 0 0 8px;
+      color: #b46a42;
+      font-size: .73rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .gallery h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: -.045em;
+    }
+
+    .gallery-note {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-auto-rows: 190px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .gallery-photo {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      border: 5px solid rgba(255, 255, 255, .88);
+      border-radius: 20px;
+      background: #ffe9ba;
+      box-shadow: 0 10px 28px rgba(137, 82, 43, .12);
+    }
+
+    .gallery-photo:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #fffaf0;
+    }
+
+    #fireworks {
+      position: fixed;
+      z-index: 5;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #birthday-intro {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: var(--cream);
+      opacity: 1;
+      transition: opacity .7s ease;
+    }
+
+    #birthday-intro.is-done {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes bob {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -10px; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: .65; scale: .88; }
+      50% { opacity: 1; scale: 1.12; }
+    }
+
+    @keyframes rotate { to { rotate: 360deg; } }
+
+    @keyframes float-photo-left {
+      0%, 100% { transform: translateY(0) rotate(-9deg); }
+      50% { transform: translateY(-18px) rotate(-5deg); }
+    }
+
+    @keyframes float-photo-right {
+      0%, 100% { transform: translateY(0) rotate(8deg); }
+      50% { transform: translateY(16px) rotate(12deg); }
+    }
+
+    @media (max-width: 720px) {
+      .topbar { width: calc(100% - 36px); padding: 15px 0; }
+      .profile-logo { width: 96px; height: 96px; }
+      main { padding: 10px 16px 35px; }
+      .birthday-card {
+        max-width: 510px;
+        grid-template-columns: 1fr;
+        border-radius: 27px;
+      }
+      .copy { padding: 43px 34px 0; }
+      .art { min-height: 320px; padding: 0 30px 18px; }
+      .cake-art { width: min(78%, 300px); }
+      .orbit { width: 260px; height: 260px; }
+      .photo-float { width: 66px; height: 66px; border-radius: 19px; }
+      .photo-float.left { top: 12%; left: 7%; }
+      .photo-float.right { right: 6%; bottom: 13%; width: 60px; height: 60px; }
+      .birthday-card::before { top: auto; right: -60px; bottom: -180px; }
+      .floating-photo { width: 105px; border-width: 4px; border-radius: 18px; opacity: .5; }
+      .floating-photo:first-child { top: 17%; left: -38px; }
+      .floating-photo:last-child { right: -38px; bottom: 17%; }
+      .gallery { width: calc(100% - 36px); padding: 20px 0 58px; }
+      .gallery-grid { grid-auto-rows: 155px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+      .gallery-photo { border-width: 4px; border-radius: 16px; }
+      .gallery-note { max-width: 135px; text-align: right; line-height: 1.5; }
+    }
+
+    @media (max-width: 390px) {
+      .copy { padding: 37px 25px 0; }
+      .art { min-height: 280px; }
+      .orbit { width: 225px; height: 225px; }
+      .brand { gap: 7px; font-size: .62rem; letter-spacing: .1em; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #birthday-intro { transition-duration: .01ms; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+  <iframe id="birthday-intro" src="intro.html" title="Birthday surprise intro"></iframe>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand"><span class="brand-star" aria-hidden="true">✦</span> A little birthday magic</div>
+      <img class="profile-logo" src="IMAGE/moyprofile.jpg" alt="Moy">
+    </header>
+
+    <div class="floating-photo-layer" aria-hidden="true">
+      <img class="floating-photo" src="IMAGE/Floatingpic1.jpg" alt="">
+      <img class="floating-photo" src="IMAGE/floatingpic2.jpg" alt="">
+    </div>
+
+    <main>
+      <section class="birthday-card" aria-labelledby="birthday-title">
+        <div class="copy">
+          <p class="eyebrow"><time datetime="2004-11-20">November 20, 2004</time></p>
+          <h1 id="birthday-title">Happy<br><span>Birthday,</span>Moy!</h1>
+          <p class="subtitle">Another trip around the sun ☀</p>
+          <p class="message">mabuhay ka hanggat gusto mo!</p>
+        </div>
+
+        <div class="art" aria-hidden="true">
+          <div class="orbit"></div>
+          <span class="sparkle one">✦</span>
+          <span class="sparkle two">✧</span>
+          <div class="photo-float left">♡</div>
+          <div class="photo-float right">✿</div>
+          <svg class="cake-art" viewBox="0 0 400 390" role="img" aria-label="A birthday cake with candles">
+            <ellipse cx="204" cy="339" rx="151" ry="25" fill="#f3c477" opacity=".45"/>
+            <path d="M75 235h257v74c0 21-17 38-38 38H113c-21 0-38-17-38-38z" fill="#f28a50"/>
+            <path d="M75 235c0-17 18-30 41-30h175c23 0 41 13 41 30s-18 29-41 29H116c-23 0-41-12-41-29z" fill="#fff0cc"/>
+            <path d="M76 250c18 0 18 20 36 20s18-20 36-20 18 20 36 20 18-20 36-20 18 20 36 20 18-20 36-20 18 20 40 20v33c-18 0-18 20-36 20s-18-20-36-20-18 20-36 20-18-20-36-20-18 20-36 20-18-20-36-20-18 20-40 20z" fill="#ffc85b"/>
+            <path d="M110 191h187v43H110z" fill="#f5a660"/>
+            <path d="M110 191c0-14 14-24 32-24h123c18 0 32 10 32 24s-14 23-32 23H142c-18 0-32-9-32-23z" fill="#fff5da"/>
+            <path d="M111 206c16 0 16 17 31 17s15-17 31-17 15 17 31 17 15-17 31-17 15 17 31 17 15-17 31-17v26H111z" fill="#ffcd69"/>
+            <path d="M148 154h132v37H148z" fill="#f5a660"/>
+            <path d="M148 154c0-13 12-22 28-22h76c16 0 28 9 28 22s-12 21-28 21h-76c-16 0-28-8-28-21z" fill="#fff5da"/>
+            <path d="M161 104h9v39h-9zM199 96h9v47h-9zM237 104h9v39h-9z" fill="#fff0bb"/>
+            <path d="M165 85c-10 12-8 22 0 25 8-3 10-13 0-25zM203 76c-10 12-8 22 0 25 8-3 10-13 0-25zM241 85c-10 12-8 22 0 25 8-3 10-13 0-25z" fill="#f27b38"/>
+            <path d="M163 187c5 7 11 7 16 0M204 187c5 7 11 7 16 0M245 187c5 7 11 7 16 0" fill="none" stroke="#e77748" stroke-linecap="round" stroke-width="4"/>
+            <circle cx="130" cy="250" r="6" fill="#fff5da"/><circle cx="184" cy="250" r="6" fill="#fff5da"/><circle cx="238" cy="250" r="6" fill="#fff5da"/><circle cx="291" cy="250" r="6" fill="#fff5da"/>
+            <path d="M82 105l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z" fill="#f6bd47"/>
+            <path d="M318 139l5 10 11 2-8 7 2 11-10-6-10 6 2-11-8-7 11-2z" fill="#f28a50"/>
+          </svg>
+        </div>
+      </section>
+    </main>
+
+    <section class="gallery" aria-labelledby="gallery-title">
+      <div class="gallery-heading">
+        <div>
+          <p class="gallery-kicker">Little moments, big memories</p>
+          <h2 id="gallery-title">Moy's photo wall</h2>
+        </div>
+        <p class="gallery-note">A whole lot of reasons to celebrate you ♡</p>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-photo"><img src="IMAGE/pic1.jpg" alt="Moy's photo 1" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic2.jpg" alt="Moy's photo 2" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic3.jpg" alt="Moy's photo 3" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic4.jpg" alt="Moy's photo 4" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic5.jpg" alt="Moy's photo 5" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic6.jpg" alt="Moy's photo 6" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic7.jpg" alt="Moy's photo 7" loading="lazy"></figure>
+        <figure class="gallery-photo"><img src="IMAGE/pic8.jpg" alt="Moy's photo 8" loading="lazy"></figure>
+      </div>
+    </section>
+    <footer>Tap anywhere to send a little birthday magic ✨</footer>
+  </div>
+
+  <script>
+    (() => {
+      const intro = document.querySelector("#birthday-intro");
+      let dismissed = false;
+
+      function dismissIntro() {
+        if (dismissed) return;
+        dismissed = true;
+        intro.classList.add("is-done");
+        window.setTimeout(() => intro.remove(), 750);
+      }
+
+      window.addEventListener("message", (event) => {
+        if (event.source !== intro.contentWindow || !event.data || event.data.type !== "moy-intro-complete") return;
+        dismissIntro();
+      });
+
+      window.setTimeout(dismissIntro, 6500);
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const canvas = document.querySelector("#fireworks");
+      const ctx = canvas.getContext("2d");
+      const colors = ["#ff6b35", "#ffc542", "#ff9f1c", "#e85d75", "#fff1bd", "#f78c45"];
+      const particles = [];
+      let width = 0;
+      let height = 0;
+      let pixelRatio = 1;
+
+      function resizeCanvas() {
+        pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * pixelRatio;
+        canvas.height = height * pixelRatio;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      }
+
+      function launch(x, y) {
+        const startX = Math.max(12, Math.min(width - 12, x + (Math.random() - .5) * 90));
+        const startY = height + 12;
+        const distance = Math.hypot(x - startX, y - startY);
+        const duration = Math.max(350, Math.min(850, distance * 1.15));
+        const hue = colors[Math.floor(Math.random() * colors.length)];
+        const startTime = performance.now();
+
+        function frame(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 2.5);
+          const rocketX = startX + (x - startX) * eased;
+          const rocketY = startY + (y - startY) * eased;
+
+          ctx.save();
+          ctx.globalCompositeOperation = "lighter";
+          ctx.globalAlpha = 1 - progress;
+          ctx.beginPath();
+          ctx.moveTo(rocketX, rocketY + 13);
+          ctx.lineTo(rocketX, rocketY - 5);
+          ctx.strokeStyle = hue;
+          ctx.lineWidth = 3;
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(rocketX, rocketY - 6, 3, 0, Math.PI * 2);
+          ctx.fillStyle = "#fff8d8";
+          ctx.fill();
+          ctx.restore();
+
+          if (progress < 1) {
+            requestAnimationFrame(frame);
+          } else {
+            burst(x, y, hue);
+          }
+        }
+
+        requestAnimationFrame(frame);
+      }
+
+      function burst(x, y, color) {
+        const count = 54 + Math.floor(Math.random() * 22);
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1.3 + Math.random() * 4.1;
+          particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            size: 1.4 + Math.random() * 2.4,
+            color: Math.random() < .72 ? color : colors[Math.floor(Math.random() * colors.length)],
+            life: 1,
+            decay: .012 + Math.random() * .014
+          });
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= .985;
+          p.vy = p.vy * .985 + .045;
+          p.life -= p.decay;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.globalAlpha = p.life;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      document.addEventListener("pointerdown", (event) => {
+        if (event.isPrimary && event.button === 0) launch(event.clientX, event.clientY);
+      });
+
+      resizeCanvas();
+      animate();
+    })();
+  </script>
+</body>
+</html>
